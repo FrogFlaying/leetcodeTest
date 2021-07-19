@@ -126,6 +126,55 @@ public class Solution {
 //        return ints;
 //    }
 
+    /**
+     * 剑指 Offer 25. 合并两个排序的链表
+     * Definition for singly-linked list.
+     * public class ListNode {
+     * int val;
+     * ListNode next;
+     * ListNode(int x) { val = x; }
+     * }
+     */
+/*//    递归
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if (l1 == null) {
+            return l2;
+        }
+        if (l2 == null) {
+            return l1;
+        }
+        if (l1.val <= l2.val) {
+            l1.next = mergeTwoLists(l1.next,l2);
+            return l1;
+        }else {
+            l2.next = mergeTwoLists(l1,l2.next);
+            return l2;
+        }
+    }*/
+
+//    迭代
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummyHead = new ListNode(-1), pre = dummyHead;
+        while (l1 != null && l2 != null) {
+            if (l1.val <= l2.val) {
+                pre.next = l1;
+                pre = pre.next;
+                l1 = l1.next;
+            } else {
+                pre.next = l2;
+                pre = pre.next;
+                l2 = l2.next;
+            }
+        }
+        if (l1 != null) {
+            pre.next = l1;
+        }
+        if (l2 != null) {
+            pre.next = l2;
+        }
+        return dummyHead.next;
+    }
+
     public int[] reversePrint(ListNode head) {
         ListNode node = head;
         int count = 0;
@@ -154,13 +203,15 @@ public class Solution {
                 fibList[i] = (int) ((fibList[i - 1] + fibList[i - 2]) % (1e9 + 7));
             }
             result = fibList[n];
-        } else switch (n) {
-            case 0:
-                result = 0;
-                break;
-            case 1:
-                result = 1;
-                break;
+        } else {
+            switch (n) {
+                case 0:
+                    result = 0;
+                    break;
+                case 1:
+                    result = 1;
+                    break;
+            }
         }
         return result;
     }
@@ -263,40 +314,40 @@ public class Solution {
                 List verList = new ArrayList();
                 for (int k = 0; k < verLength; k++) {
                     char c1 = board[j][k];
-                        if (c == c1) {
-                            if (i == 0) {
-                                verList.add(k);
-                                jList.add(j);
-                                intMap.put(j, verList);
-                                strMap.put(str, intMap);
-                            }
-                            if (jList.contains(j + 1)) {
-
-                            }
-                            if (jList.contains(j - 1)) {
-
-                            }
+                    if (c == c1) {
+                        if (i == 0) {
+                            verList.add(k);
+                            jList.add(j);
+                            intMap.put(j, verList);
+                            strMap.put(str, intMap);
                         }
+                        if (jList.contains(j + 1)) {
 
+                        }
+                        if (jList.contains(j - 1)) {
+
+                        }
                     }
+
                 }
             }
-            return isExist;
         }
+        return isExist;
+    }
 
-        //    ""
-        @Test
-        public void testReplaceSpace () {
-            Solution solution = new Solution();
-            System.out.println(solution.replaceSpace("We are happy."));
+    //    ""
+    @Test
+    public void testReplaceSpace() {
+        Solution solution = new Solution();
+        System.out.println(solution.replaceSpace("We are happy."));
 
-            String s = "We are happy.";
-            s.replaceAll(" ", "%20");
-            System.out.println(s);
-        }
+        String s = "We are happy.";
+        s.replaceAll(" ", "%20");
+        System.out.println(s);
+    }
 
-        @Test
-        public void testReversePrint () {
+    @Test
+    public void testReversePrint() {
 //        ListNode head = [1,2,3];
 //        ListNode node = head;
 //        int count = 0;
@@ -306,35 +357,49 @@ public class Solution {
 //        }
 //        int[] ints = reversePrint(head);
 //        System.out.println(ints);
-        }
+    }
 
 
-        //    斐波那契数列由 0 和 1 开始，之后的斐波那契数就是由之前的两数相加而得出。
+    //    斐波那契数列由 0 和 1 开始，之后的斐波那契数就是由之前的两数相加而得出。
 //    答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。
 //    提示：0 <= n <= 100
-        @Test
-        public void testfib () {
-            int n = 55;
-            for (int i = 45; i < n; i++) {
-                System.out.println(fib(i));
-            }
+    @Test
+    public void testfib() {
+        int n = 55;
+        for (int i = 45; i < n; i++) {
+            System.out.println(fib(i));
+        }
 
 //        int fib = fib(0);
 //        System.out.println(fib);
-        }
-
-        @Test
-        public void testNumWays () {
-            int n = 2;
-            int result = numWays(n);
-            System.out.println(result);
-        }
-
-        @Test
-        public void testMinArray () {
-            int[] nums = new int[]{2, 2, 2, 0, 1};
-            int i = minArray(nums);
-            System.out.println(i);
-        }
-
     }
+
+    @Test
+    public void testNumWays() {
+        int n = 2;
+        int result = numWays(n);
+        System.out.println(result);
+    }
+
+    @Test
+    public void testMinArray() {
+        int[] nums = new int[]{2, 2, 2, 0, 1};
+        int i = minArray(nums);
+        System.out.println(i);
+    }
+
+    @Test
+    public void testMergeTwoLists() {
+        ListNode l1 = new ListNode(1);
+//        ListNode l1next = l1.next;
+//        l1next.val = 2;
+//        l1next.next.val = 4;
+        ListNode l2 = new ListNode(2);
+//        ListNode l2next = l2.next;
+//        l2next.val = 3;
+//        l2next.next.val = 4;
+        ListNode listNode = mergeTwoLists(l1, l2);
+        System.out.println(listNode);
+    }
+
+}
