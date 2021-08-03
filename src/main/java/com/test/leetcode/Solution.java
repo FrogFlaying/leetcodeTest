@@ -263,40 +263,96 @@ public class Solution {
                 List verList = new ArrayList();
                 for (int k = 0; k < verLength; k++) {
                     char c1 = board[j][k];
-                        if (c == c1) {
-                            if (i == 0) {
-                                verList.add(k);
-                                jList.add(j);
-                                intMap.put(j, verList);
-                                strMap.put(str, intMap);
-                            }
-                            if (jList.contains(j + 1)) {
-
-                            }
-                            if (jList.contains(j - 1)) {
-
-                            }
+                    if (c == c1) {
+                        if (i == 0) {
+                            verList.add(k);
+                            jList.add(j);
+                            intMap.put(j, verList);
+                            strMap.put(str, intMap);
                         }
+                        if (jList.contains(j + 1)) {
 
+                        }
+                        if (jList.contains(j - 1)) {
+
+                        }
                     }
+
                 }
             }
-            return isExist;
         }
+        return isExist;
+    }
 
-        //    ""
-        @Test
-        public void testReplaceSpace () {
-            Solution solution = new Solution();
-            System.out.println(solution.replaceSpace("We are happy."));
+    /**
+     * 编写一个函数，用于生成随机密码，入参为随机密码的长度，出参为生成的随机密码，要求生成的随机密码必须同时包含大写字母小写字母数字。
+     * 生成随机码，参数为随机码长度，同时包含大小写字母和数字
+     */
+    public String getRandomNum(int length) {
 
-            String s = "We are happy.";
-            s.replaceAll(" ", "%20");
-            System.out.println(s);
+        char[] c = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+
+        ArrayList<Character> list = new ArrayList<Character>();
+
+        if (length < 3) {
+            return "输入的随机数字应大于3";
+        } else {
+            Random random = new Random();
+
+            //先从10个数字中任取一个
+            int i1 = random.nextInt(10);
+            list.add(c[i1]);
+
+            //再从26个大写字母中任取一个
+            int i2 = 10 + random.nextInt(26);
+            list.add(c[i2]);
+
+            //再从26个小写字母中任取一个
+            int i3 = 36 + random.nextInt(26);
+            list.add(c[i3]);
+
+            //剩余的从全部中任选
+            for (int i = 0; i < length - 3; i++) {
+                int i4 = random.nextInt(62);
+                list.add(c[i4]);
+            }
+
+            //打乱顺序
+            ArrayList<Integer> indexList = new ArrayList<>();
+            while (indexList.size() < length) {
+                //随机产生下标值
+                int i = random.nextInt(length);
+                if (!indexList.contains(i)) {
+                    indexList.add(i);
+                }
+            }
+
+            //按随机产生的下标值，将随机码组成字符
+            StringBuffer s = new StringBuffer();
+            for (int i = 0; i < length; i++) {
+                int index = indexList.get(i);
+                s.append(list.get(index));
+            }
+            return s.toString();
         }
+    }
 
-        @Test
-        public void testReversePrint () {
+
+    //    ""
+    @Test
+    public void testReplaceSpace() {
+        Solution solution = new Solution();
+        System.out.println(solution.replaceSpace("We are happy."));
+
+        String s = "We are happy.";
+        s.replaceAll(" ", "%20");
+        System.out.println(s);
+    }
+
+    @Test
+    public void testReversePrint() {
 //        ListNode head = [1,2,3];
 //        ListNode node = head;
 //        int count = 0;
@@ -306,35 +362,40 @@ public class Solution {
 //        }
 //        int[] ints = reversePrint(head);
 //        System.out.println(ints);
-        }
+    }
 
 
-        //    斐波那契数列由 0 和 1 开始，之后的斐波那契数就是由之前的两数相加而得出。
+    //    斐波那契数列由 0 和 1 开始，之后的斐波那契数就是由之前的两数相加而得出。
 //    答案需要取模 1e9+7（1000000007），如计算初始结果为：1000000008，请返回 1。
 //    提示：0 <= n <= 100
-        @Test
-        public void testfib () {
-            int n = 55;
-            for (int i = 45; i < n; i++) {
-                System.out.println(fib(i));
-            }
+    @Test
+    public void testfib() {
+        int n = 55;
+        for (int i = 45; i < n; i++) {
+            System.out.println(fib(i));
+        }
 
 //        int fib = fib(0);
 //        System.out.println(fib);
-        }
-
-        @Test
-        public void testNumWays () {
-            int n = 2;
-            int result = numWays(n);
-            System.out.println(result);
-        }
-
-        @Test
-        public void testMinArray () {
-            int[] nums = new int[]{2, 2, 2, 0, 1};
-            int i = minArray(nums);
-            System.out.println(i);
-        }
-
     }
+
+    @Test
+    public void testNumWays() {
+        int n = 2;
+        int result = numWays(n);
+        System.out.println(result);
+    }
+
+    @Test
+    public void testMinArray() {
+        int[] nums = new int[]{2, 2, 2, 0, 1};
+        int i = minArray(nums);
+        System.out.println(i);
+    }
+
+    @Test
+    public void testGetRandomNum(){
+        String randomNum = getRandomNum(5);
+        System.out.println(randomNum);
+    }
+}
